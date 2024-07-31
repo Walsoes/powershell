@@ -1,4 +1,4 @@
-﻿# Kör scriptet som SA
+# Kör scriptet som SA
 #installeras automatiskt
 
 function Load-Module ($m) {
@@ -34,17 +34,26 @@ Load-Module "JoinModule"
 
 #behöver modulen Joinmodule
 
-$credpath = "C:\PS\bens.cred"
+$credpath = "C:\PS\Credentials.cred"
 
-if (Test-path $credpath) {            $creds = Import-Clixml -Path C:\PS\bens.cred        } else {            $creds = Get-credential                        $creds | Export-Clixml -Path C:\PS\bens.cred                        }
+if (Test-path $credpath) {
+
+            $creds = Import-Clixml -Path C:\PS\bens.cred
+        } else {
+            $creds = Get-credential
+            
+            $creds | Export-Clixml -Path C:\PS\bens.cred                
+        }
 
 
 
 
-$servers = invoke-command -ComputerName its-ts-03 -Credential $creds -ScriptBlock { 
+
+
+$servers = invoke-command -ComputerName <AD-server> -Credential $creds -ScriptBlock { 
     Get-ADComputer -Properties operatingsystem -filter 'operatingsystem -like "Windows Server*"' | Select-object -ExpandProperty name } | sort-object
 
-$serversOchOS = invoke-command -ComputerName its-ts-03 -Credential $creds -ScriptBlock { 
+$serversOchOS = invoke-command -ComputerName <AD-server> -Credential $creds -ScriptBlock { 
     Get-ADComputer -Properties operatingsystem -filter 'operatingsystem -like "Windows Server*"' | Select-object -property @{Label="server";Expression={$_.name}},operatingsystem } | Sort-Object
 
 [System.Collections.ArrayList]$RemoteOK = @()
@@ -53,7 +62,7 @@ $serversOchOS = invoke-command -ComputerName its-ts-03 -Credential $creds -Scrip
 [System.Collections.ArrayList]$IngenJava = @()
 
 
-foreach ($server in $servers[0..544]) {
+foreach ($server in $servers) {
     
    $RemoteBoolean = [System.Net.Sockets.TcpClient]::new().ConnectAsync($server, 5985).Wait(250) 
 
