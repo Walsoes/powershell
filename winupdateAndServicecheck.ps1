@@ -39,8 +39,8 @@ function Get-Status {
    param (
       [Parameter(Mandatory = $true, ValueFromPipeline)] [string[]] $Server,
       [Parameter(Mandatory = $false)] [string[]] $tjanster,
-      [parameter(Mandatory = $false)] [string] $user, #Ex. vih013sa
-      [Parameter(Mandatory = $false)] [string] $domain # ex. extad.lul.se\
+      [parameter(Mandatory = $false)] [string] $user,  
+      [Parameter(Mandatory = $false)] [string] $domain 
    )      
    
                                                             
