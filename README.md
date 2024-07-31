@@ -1,2 +1,2 @@
 # powershell
-Diverse användbara PS-script
+Diverse användbara PS-script som systemadmin
