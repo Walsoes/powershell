@@ -1,4 +1,3 @@
-﻿
 #requires -version 4.0
 
 Write-Output "This script requires PowerShell 4.0 or higher."
